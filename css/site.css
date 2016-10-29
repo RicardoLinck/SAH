@@ -4,3 +4,49 @@
    margin-bottom: 20px;
    border:4px solid #ababab; 
 }
+
+#menu{
+    list-style: none;
+    margin-top: 50px;
+}
+
+    #menu li{
+        border: 1px solid #ababab;
+        text-align: center;
+        padding: 10px;    
+    }
+
+        #menu li:first-child{
+            border-bottom: none;
+        }
+
+        #menu li:last-child{
+            border-top: none;
+        }
+
+#chart-container{
+    margin:50px 0px 0px 20px;
+    height: 200px;
+    border: 1px solid black;
+}
+
+.dashboard-info{
+    border: 1px solid black;
+}
+
+.table-container{
+    padding: 20px;
+}
+
+    .table-container th{
+        text-align: center;
+    }
+
+    .table-container tr{
+        text-align: center;
+    }
+
+    .table-container tfoot tr, th{
+        background-color: #efefef;
+        font-weight: bold;
+    }

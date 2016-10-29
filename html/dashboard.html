@@ -8,20 +8,73 @@
         <div class="container">
             <img class="login-logo"/>
             <div class="main">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h3 class="pull-left">Usuário: Fulano de Tal</h3>
-                                <h3 class="pull-right">Perfil: Trabalhador</h3>
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        <ul id="menu">
+                            <li><a href="#">Inserir</a></li>
+                            <li><a href="#">Editar</a></li>
+                            <li><a href="#">Visualizar</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3 class="pull-left">Usuário: Fulano de Tal</h3>
+                                        <h3 class="pull-right">Perfil: Trabalhador</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-8 col-xs-12">
+                                        <h1>Período: <span class="label label-default dashboard-info">01/10/2016 à 31/10/2016</span></h1>
+                                        <h3>Status: <span class="label label-default dashboard-info">Encaminhada para o Coordenador de Curso</span></h3>
+                                        <div class="table-container">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Justificativa</th>
+                                                        <th>Horas</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Versionamento</td>
+                                                        <td>0</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Produção</td>
+                                                        <td>0</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Capacitação</td>
+                                                        <td>0</td>
+                                                    </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td>Total</td>
+                                                        <td>0</td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-xs-12">
+                                        <div id="chart-container">
+                                            <div id="chart">
+                                                Gráfico com percentual por justificativa
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="panel-body">
-                        <div class="well"></div>
-                    </div>
-                </div>
-            </div>     
+                </div> 
+            </div>    
         </div>
     </body>
 </html>

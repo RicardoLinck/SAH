@@ -11,10 +11,13 @@
 }
 
     #menu li{
-        border: 1px solid #ababab;
         text-align: center;
-        padding: 10px;    
+        padding: 5px;    
     }
+
+        #menu li a{
+            width: 150px;
+        }
 
         #menu li:first-child{
             border-bottom: none;
@@ -35,7 +38,7 @@
 }
 
 .table-container{
-    padding: 20px;
+    padding: 10px;
 }
 
     .table-container th{
@@ -50,3 +53,11 @@
         background-color: #efefef;
         font-weight: bold;
     }
+
+.panel-title a{
+    text-decoration: none;
+}
+
+.panel-title a:hover{
+    text-decoration: none;
+}

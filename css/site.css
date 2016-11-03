@@ -65,3 +65,7 @@
 .panel-title a:hover{
     text-decoration: none;
 }
+
+.error-container{
+    margin-top:20px;
+}

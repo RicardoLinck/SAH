@@ -6,14 +6,19 @@
                 $scope.emailValidationResult = "";
                 return false;
             }
-
+            
             $scope.emailValidationResult = 'hidden';
-            location.href = "selecao-perfil.html";
+
+            if ($scope.model.hasManyProfiles)
+                location.href = "selecao-perfil.html";
+            else
+                location.href = "dashboard.html";
         }
 
         $scope.emailValidationResult = 'hidden';
 
         var validateLogin = function(){
+            $scope.model.hasManyProfiles = true;
             return $scope.model.email == 'teste@teste.com' && $scope.model.password == '123';
         }
     });

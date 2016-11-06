@@ -1,4 +1,4 @@
-<html>
+<html ng-app="sah">
     <head>
         <meta charset="UTF-8">
         <meta name="description" content="Sistema para ajuste de horas.">
@@ -7,8 +7,15 @@
         <title>Dashboard - SAH</title>
         <link rel="stylesheet" href="../css/bootstrap.min.css">
         <link rel="stylesheet" href="../css/site.css">
+        <script src="../js/jquery-3.1.1.min.js"></script>
+        <script src="../js/jquery.validate.min.js"></script>
+        <script src="../js/moment.min.js"></script>
+        <script src="../js/angular.min.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="../js/app.js"></script>
+        <script src="../js/dashboard.js"></script>
     </head>
-    <body>
+    <body ng-controller="dashboardCtrl">
         <div class="container">
             <div class="login-logo page-header text-center">
                 <h1>
@@ -44,17 +51,21 @@
                                 <div class="panel-title">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <h3 class="pull-left">Usuário: Fulano de Tal</h3>
-                                            <h3 class="pull-right">Perfil: Trabalhador</h3>
+                                            <h3 class="pull-left">Usuário: {{model.user.name}}</h3>
+                                            <h3 class="pull-right">Perfil: {{model.user.profile}}</h3>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="panel-body">
                                 <div class="row">
-                                    <div class="col-md-8 col-xs-12">
-                                        <h1>Período: <span class="label label-default dashboard-info">01/10/2016 à 31/10/2016</span></h1>
-                                        <h3>Status: <span class="label label-default dashboard-info">Encaminhada para o Coordenador de Curso</span></h3>
+                                    <div class="col-md-12 col-xs-12 text-center">
+                                        <h1>Período: <span class="label label-default dashboard-info">{{model.period.startFomated()}} à {{model.period.endFomated()}}</span></h1>
+                                        <h3>Status: <span class="label label-default dashboard-info">{{model.period.status}}</span></h3>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-12">
                                         <div class="table-container">
                                             <table class="table">
                                                 <thead>
@@ -64,32 +75,23 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>Versionamento</td>
-                                                        <td>0</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Produção</td>
-                                                        <td>0</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Capacitação</td>
-                                                        <td>0</td>
+                                                    <tr ng-repeat="detail in model.period.details">
+                                                        <td>{{detail.description}}</td>
+                                                        <td>{{detail.hours}}</td>
                                                     </tr>
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
                                                         <td>Total</td>
-                                                        <td>0</td>
+                                                        <td>{{model.period.totalDetails()}}</td>
                                                     </tr>
                                                 </tfoot>
                                             </table>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 col-xs-12">
+                                    <div class="col-lg-6 col-sm-12 text-center">
                                         <div id="chart-container">
                                             <div id="chart">
-                                                Gráfico com percentual por justificativa
                                             </div>
                                         </div>
                                     </div>

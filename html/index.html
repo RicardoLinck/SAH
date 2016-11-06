@@ -1,4 +1,4 @@
-<html>
+<html ng-app="sah">
     <head>
         <meta charset="UTF-8">
         <meta name="description" content="Sistema para ajuste de horas.">
@@ -7,8 +7,13 @@
         <title>Login - SAH</title>
         <link rel="stylesheet" href="../css/bootstrap.min.css">
         <link rel="stylesheet" href="../css/site.css">
+        <script src="../js/jquery-3.1.1.min.js"></script>
+        <script src="../js/jquery.validate.min.js"></script>
+        <script src="../js/angular.min.js"></script>
+        <script src="../js/app.js"></script>
+        <script src="../js/index.js"></script>
     </head>
-    <body>
+    <body ng-controller="indexCtrl">
         <div class="container">
             <div class="login-logo page-header text-center">
                 <h1>
@@ -23,14 +28,14 @@
                         <div class="panel panel-default">
                             <div class="panel-heading"><h4>Digite seu e-mail para acessar o sistema ajuste de ponto</h4></div>
                             <div class="panel-body">
-                                <form action="">
+                                <form ng-submit="submit()">
                                     <div class="form-group">
                                         <label for="email">E-mail</label>
-                                        <input type="text" id="email" class="form-control" placeholder="Digite o seu e-mail">
+                                        <input type="email" id="email" name="email" class="form-control" placeholder="Digite o seu e-mail" required ng-model="model.email"/>
                                     </div>
                                     <div class="form-group">
                                         <label for="password">Senha</label>
-                                        <input type="password" id="password" class="form-control" placeholder="Digite sua senha">
+                                        <input type="password" id="password" name="password" class="form-control" placeholder="Digite sua senha" required ng-model="model.password"/>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-6">
@@ -39,7 +44,14 @@
                                             <a href="#">Esqueceu sua senha?</a>
                                         </div>
                                         <div class="col-lg-3 col-lg-offset-3">
-                                            <a href="selecao-perfil.html" class="btn btn-primary pull-right">Entrar</a>
+                                            <button type="submit" class="btn btn-primary pull-right">Entrar</button>
+                                        </div>
+                                    </div>
+                                    <div class="row error-container {{emailValidationResult}}">
+                                        <div class="col-lg-12">
+                                            <div class="alert alert-danger">
+                                                Usuário ou senha inválido.
+                                            </div>
                                         </div>
                                     </div>  
                                 </form>

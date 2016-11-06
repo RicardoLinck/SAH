@@ -31,10 +31,12 @@
         }
 
 #chart-container{
-    margin:50px 0px 0px 20px;
-    height: 200px;
+    margin:10px;
+    height: 210px;
+    width: 360px;
     border: 1px solid #ababab;
     border-radius: 5px;
+    vertical-align: middle;
 }
 
 .dashboard-info{
@@ -64,4 +66,8 @@
 
 .panel-title a:hover{
     text-decoration: none;
+}
+
+.error-container{
+    margin-top:20px;
 }

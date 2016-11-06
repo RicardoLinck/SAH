@@ -1,4 +1,4 @@
-<html>
+<html ng-app="sah">
     <head>
         <meta charset="UTF-8">
         <meta name="description" content="Sistema para ajuste de horas.">
@@ -7,8 +7,13 @@
         <title>Seleção de perfil - SAH</title>
         <link rel="stylesheet" href="../css/bootstrap.min.css">
         <link rel="stylesheet" href="../css/site.css">
+        <script src="../js/jquery-3.1.1.min.js"></script>
+        <script src="../js/jquery.validate.min.js"></script>
+        <script src="../js/angular.min.js"></script>
+        <script src="../js/app.js"></script>
+        <script src="../js/selecao-perfil.js"></script>
     </head>
-    <body>
+    <body ng-controller="selecaoPerfilCtrl">
         <div class="container">
             <div class="login-logo page-header text-center">
                 <h1>
@@ -21,18 +26,15 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading"><h1>Usuário: Fulano de Tal</h1></div>
                     <div class="panel-body">
-                        <form action="">
+                        <form ng-submit="submit()">
                             <div class="form-group">
                                 <label for="profile">Perfil de Usuário</label>
-                                <select id="profile" class="form-control">
-                                    <option value="1">Trabalhador</option>
-                                    <option value="2">Coordenador de Curso</option>
-                                    <option value="3">Coordenador do Núcleo Pedagógico</option>
+                                <select id="profile" class="form-control" ng-options="profile as profile.name for profile in profiles track by profile.id" ng-model="selectedProfile" required>
                                 </select>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <a href="dashboard.html" class="btn btn-primary pull-right">Entrar</a>
+                                    <button type="submit" class="btn btn-primary pull-right">Entrar</button>
                                 </div>
                             </div>
                         </form>

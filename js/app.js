@@ -10,12 +10,21 @@
                 label.parent().remove();
             },
             messages:{
-                email:{
+                'email':{
                     required:"O campo “E-mail” é de preenchimento obrigatório.",
                     email: "O e-mail informado para autenticação, não é um e-mail válido."
                 },
-                password:{
+                'password':{
                     required:"O campo “Senha” é de preenchimento obrigatório."
+                },
+                'data':{
+                    required:"O campo “Data” é de preenchimento obrigatório."
+                },
+                'hora-entrada':{
+                    required:"O campo “Hora Entrada” é de preenchimento obrigatório."
+                },
+                'hora-saida':{
+                    required:"O campo “Hora Saída” é de preenchimento obrigatório."
                 }
             }
         });

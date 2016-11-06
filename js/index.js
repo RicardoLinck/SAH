@@ -1,7 +1,9 @@
  angular.module("sah", [])
     .controller('indexCtrl',function($scope) {
         $scope.submit = function(){
-
+            if(!$('form').validate().valid())
+                return false;
+                
             if(!validateLogin()){
                 $scope.emailValidationResult = "";
                 return false;

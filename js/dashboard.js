@@ -1,6 +1,8 @@
  angular.module("sah", [])
     .controller('dashboardCtrl',function($scope, $http) {
 
+        $scope.showData = false;
+        
         var initChart = function(){
             google.charts.load('current', {'packages':['corechart']});
             google.charts.setOnLoadCallback(drawChart);    
@@ -31,8 +33,9 @@
 
         var getModel = $http.get('/sah/php/dashboard.php').then(function(data){
             $scope.model = data.data;
+            $scope.showData = $scope.model.period != null;
 
-            if($scope.model.period != null){
+            if($scope.model.period!=null){
                 $scope.model.period.startFomated = function(){return moment($scope.model.period.start).format('DD/MM/YYYY')};
                 $scope.model.period.endFomated = function(){return moment($scope.model.period.end).format('DD/MM/YYYY')};
                 $scope.model.period.totalDetails = function(){

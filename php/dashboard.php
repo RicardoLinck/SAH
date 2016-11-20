@@ -25,9 +25,9 @@
                         INNER JOIN periods ON periods.id_user = users.id AND periods.start_date <= entries.date AND periods.end_date >= entries.date
                         INNER JOIN status_periods on periods.id_status_periods = status_periods.id
                         INNER JOIN entry_types ON entries.id_entry_type = entry_types.id
-                        WHERE periods.id_status_periods = 0 and users.id = '" . $_SESSION['user']['id'] . "'
+                        WHERE MONTH(periods.start_date) = " . date('n') . " and users.id = '" . $_SESSION['user']['id'] . "'
                         GROUP BY periods.start_date, periods.end_date, status_periods.description, entry_types.description");
-
+    
     if(!$query){
         header("HTTP/1.1 500 Internal Server Error");
         ob_clean();

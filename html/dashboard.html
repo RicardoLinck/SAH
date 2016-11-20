@@ -57,14 +57,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="panel-body" ng-hide="$scope.model.period!=null">
+                            <div class="panel-body" ng-hide="showData">
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <h3 class="text-center">Nenhum registro encontrado</h3>
                                     </div>
                                 </div>
                             </div>
-                            <div class="panel-body" ng-show="$scope.model.period!=null">
+                            <div class="panel-body" ng-show="showData">
                                 <div class="row">
                                     <div class="col-md-12 col-xs-12 text-center">
                                         <h1>Período: <span class="label label-default dashboard-info">{{model.period.startFomated()}} à {{model.period.endFomated()}}</span></h1>

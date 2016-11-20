@@ -18,8 +18,9 @@
     }
 
     $db->query('SET CHARACTER SET utf8');
-    $query = $db->query("SELECT users.id, users.name, users_profiles.id users_profiles_id 
-                        FROM users INNER JOIN users_profiles ON users.id = users_profiles.id_user 
+    $query = $db->query("SELECT users.id, users.name, profiles.id id_profile,  profiles.description description_profile
+                        FROM users INNER JOIN users_profiles ON users.id = users_profiles.id_user
+                        INNER JOIN profiles ON users_profiles.id_profile = profiles.id 
                         WHERE email ='" .  $email . "' AND password = '" . $password . "'");
 
     $json = array();
@@ -31,6 +32,11 @@
 
         $json['success'] = $num_rows > 0;
         $json['hasManyProfiles'] = $num_rows > 1;
+
+        if(!$json['hasManyProfiles']){
+            $_SESSION['user']['selectedProfile']['id'] = $data['id_profile'];
+            $_SESSION['user']['selectedProfile']['description'] = $data['description_profile'];
+        }
     }
     else{
         header("HTTP/1.1 500 Internal Server Error");

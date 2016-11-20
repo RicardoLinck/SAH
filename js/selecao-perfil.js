@@ -12,6 +12,7 @@
 
         $scope.submit = function(){
             $http.post('/sah/php/selecao-perfil.php',$scope.selectedProfile).then(function(data){
+                console.log(data);
                 location.href = "dashboard.html";
             }, function(data){
                 alert(data.data);

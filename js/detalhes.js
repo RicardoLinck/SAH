@@ -1,5 +1,5 @@
  angular.module("sah", [])
-    .controller('detailsCtrl',function($scope) {
+    .controller('detailsCtrl',function($scope, $http) {
 
         var getAction = function(){
             return location.search.split('action=')[1];
@@ -50,6 +50,12 @@
 
         $scope.model.inputPanel.add = function (){
             var inputModel = $scope.model.inputPanel;
+
+            $http.post('/sah/php/detalhes.php', inputModel)
+                .then(function (data){
+                    console.log(data.data);
+                });
+
             $scope.model.results.push({
                 date: moment(inputModel.date).format('DD/MM/YYYY'), startHour: moment(inputModel.startHour).format("HH:mm"), endHour:moment(inputModel.endHour).format("HH:mm"), totalHours:moment(inputModel.endHour).diff(moment(inputModel.startHour),'hours'), description:inputModel.description.text
             });

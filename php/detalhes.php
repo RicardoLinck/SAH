@@ -12,8 +12,8 @@
         $putData = json_decode(file_get_contents('php://input'), true);
         handlePut($putData);
     }else if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
-        $putData = json_decode(file_get_contents('php://input'), true);
-        handleDelete($putData);
+        print_r($_REQUEST);
+        handleDelete($_REQUEST);
     }
 
     function handlePost($postData){
@@ -34,20 +34,42 @@
         $command = "INSERT INTO Entries (id_user, id_entry_type, date, start_time, end_time) 
                     VALUES (" . $_SESSION['user']['id'] . ", " .
                     $postData['description']['id'] . ", " .
-                    "'" . $postData['date'] . "', " .
-                    "'" . $postData['startHour'] . "', " .
-                    "'" . $postData['endHour'] . "')";
+                    "'" . $postData['dateFormatted'] . "', " .
+                    "'" . $postData['startHourFormatted'] . "', " .
+                    "'" . $postData['endHourFormatted'] . "')";
                     
-        $db->execute($command);
+        $stmt = $db->prepare($command);
+        $result = $stmt->execute();
 
-        print_r($command);
-
-        // echo(json_encode($json,JSON_UNESCAPED_UNICODE));
+        $stmt->close();
         $db->close();
+
+        if(!$result){
+            header("HTTP/1.1 500 Internal Server Error");
+            ob_clean();
+            die('Erro ao executar comando.');
+        }
     }
 
     function handleGet($getData){
         $db = createDatabaseConnection();
+
+        $db->query('SET CHARACTER SET utf8');
+        $query = $db->query("SELECT profiles.id, profiles.description 
+                            FROM profiles INNER JOIN users_profiles ON profiles.id = users_profiles.id_profile
+                            WHERE users_profiles.id_user = '" . $_SESSION['user']['id'] . "'");
+
+        if(!$query){
+            header("HTTP/1.1 500 Internal Server Error");
+            ob_clean();
+            die('Erro ao executar query no banco.');
+        }
+
+        $json = array();
+        header('Content-Type: application/json; Charset=UTF-8');
+        while($data = $query->fetch_assoc()){
+            $json[] = $data;
+        }
 
         echo(json_encode($json,JSON_UNESCAPED_UNICODE));
         $db->close();
@@ -60,11 +82,24 @@
         $db->close();
     }
 
-    function handleDelete($putData){
+    function handleDelete($deleteData){
         $db = createDatabaseConnection();
 
-        echo(json_encode($json,JSON_UNESCAPED_UNICODE));
+        $command = "DELETE FROM Entries WHERE id = " . $deleteData['id'];
+                    
+        print_r($command);
+        $stmt = $db->prepare($command);
+        $result = $stmt->execute();
+
+        $stmt->close();
         $db->close();
+
+        if(!$result){
+            header("HTTP/1.1 500 Internal Server Error");
+            ob_clean();
+            die('Erro ao executar comando.');
+        }
+
     }
 
     function createDatabaseConnection(){
@@ -72,7 +107,7 @@
         if(!$db){
             header("HTTP/1.1 500 Internal Server Error");
             ob_clean();
-            die('Error connecting to the database.');
+            die('Erro ao conectar no banco.');
         }
 
         return $db;

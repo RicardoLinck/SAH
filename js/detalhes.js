@@ -33,8 +33,8 @@
                 ]
             },
             results:[
-                {date: moment(new Date(2016,10,1)).format('DD/MM/YYYY'), startHour: '08:00', endHour:'12:00', totalHours:4, description:'Versionamento'},
-                {date: moment(new Date(2016,10,1)).format('DD/MM/YYYY'), startHour: '13:00', endHour:'17:00', totalHours:4, description:'Produção'}
+                {id:1, date: moment(new Date(2016,10,1)).format('DD/MM/YYYY'), startHour: '08:00', endHour:'12:00', totalHours:4, description:'Versionamento'},
+                {id:2, date: moment(new Date(2016,10,1)).format('DD/MM/YYYY'), startHour: '13:00', endHour:'17:00', totalHours:4, description:'Produção'}
             ]
         };
 
@@ -44,21 +44,30 @@
 
         $scope.model.removeResult = function (index){
             if(confirm('Remover registro da data: ' + $scope.model.results[index].date + ' ?')){
-                $scope.model.results.splice(index,1);
+                $http.delete('/sah/php/detalhes.php?id=' + 21 /*$scope.model.results[index].id*/)
+                .then(function(data){
+                    console.log(data.data);
+                }, function (data){
+                    alert(data.data);                    
+                });
             };
         }
 
         $scope.model.inputPanel.add = function (){
             var inputModel = $scope.model.inputPanel;
 
+            inputModel.startHourFormatted = moment(inputModel.startHour).format('HH:mm:ss');
+            inputModel.endHourFormatted = moment(inputModel.endHour).format('HH:mm:ss');
+            inputModel.dateFormatted = moment(inputModel.date).format('YYYY-MM-DD');
+
             $http.post('/sah/php/detalhes.php', inputModel)
                 .then(function (data){
                     console.log(data.data);
+                }, function (data){
+                    alert(data.data);                    
                 });
 
-            $scope.model.results.push({
-                date: moment(inputModel.date).format('DD/MM/YYYY'), startHour: moment(inputModel.startHour).format("HH:mm"), endHour:moment(inputModel.endHour).format("HH:mm"), totalHours:moment(inputModel.endHour).diff(moment(inputModel.startHour),'hours'), description:inputModel.description.text
-            });
+            
         };
 
         $scope.model.inputPanel.filter = function (){

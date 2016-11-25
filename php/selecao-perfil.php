@@ -25,7 +25,7 @@
         if(!$db){
             header("HTTP/1.1 500 Internal Server Error");
             ob_clean();
-            die('Error connecting to the database.');
+            die('Erro ao conectar com o banco.');
         }
 
         $db->query('SET CHARACTER SET utf8');
@@ -36,7 +36,7 @@
         if(!$query){
             header("HTTP/1.1 500 Internal Server Error");
             ob_clean();
-            die('Error executing query to the database.');
+            die('Erro ao executar query no banco.');
         }
 
         $json = array();

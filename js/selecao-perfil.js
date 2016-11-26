@@ -1,14 +1,25 @@
  angular.module("sah", [])
-    .controller('selecaoPerfilCtrl',function($scope) {
-        $scope.profiles = [
-            { id:1, name:'Trabalhador' },
-            { id:2, name:'Coordenador de Curso' },
-            { id:3, name:'Coordenador do Núcleo Pedagógico' },
-        ];
-
-        $scope.selectedProfile = $scope.profiles[0];
+    .controller('selecaoPerfilCtrl', function($scope, $http) {
+        var getProfiles = $http.get('/sah/php/selecao-perfil.php').then(function(data){
+            $scope.profiles = data.data;
+            $scope.selectedProfile = $scope.profiles[0];
+        }, function(data){
+            alert(data.data);
+            if(data.status == 402){
+                window.location.href = '/sah/html/index';
+            }
+        });
 
         $scope.submit = function(){
-            location.href = "dashboard.html";
+            $http.post('/sah/php/selecao-perfil.php',$scope.selectedProfile).then(function(data){
+                console.log(data);
+                location.href = "dashboard.html";
+            }, function(data){
+                alert(data.data);
+                if(data.status == 402){
+                    window.location.href = '/sah/html/index';
+                }
+            })
+            
         } 
     });

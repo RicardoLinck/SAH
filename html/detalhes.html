@@ -34,11 +34,6 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="detalhes.html?action=editar" class="btn btn-primary">
-                                    <i class="glyphicon glyphicon-pencil"></i> Editar
-                                </a>
-                            </li>
-                            <li>
                                 <a href="detalhes.html?action=visualizar" class="btn btn-primary">
                                     <i class="glyphicon glyphicon-search"></i> Visualizar
                                 </a>
@@ -68,13 +63,13 @@
                                                 <div class="col-lg-{{model.inputPanel.inputsSize()}} col-md-{{model.inputPanel.inputsSize()}} col-xs-6">
                                                     <div class="form-group">
                                                         <label for="data-entrada">{{model.inputPanel.startDateLabel()}}</label>
-                                                        <input type="date" id="data-entrada" class="form-control" ng-model="model.inputPanel.startDate" ng-hide="model.inputPanel.showInputForInserirAction()"/>
                                                         <input type="date" id="data" name="data" class="form-control" required ng-model="model.inputPanel.date" ng-show="model.inputPanel.showInputForInserirAction()"/>
+                                                        <input type="date" id="data-entrada" class="form-control" ng-model="model.inputPanel.startDate" ng-hide="model.inputPanel.showInputForInserirAction()"/>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4 col-md-4 col-xs-6" ng-hide="model.inputPanel.showInputForInserirAction()">
                                                     <div class="form-group">
-                                                        <label for="data-saida">Data Saída</label>
+                                                        <label for="data-saida">Data Final</label>
                                                         <input type="date" id="data-saida" name="data-saida" class="form-control" ng-model="model.inputPanel.endDate"/>
                                                     </div>
                                                 </div>
@@ -97,10 +92,10 @@
                                                     <div class="form-group">
                                                         <label for="justificativa">Justificativa</label>
                                                         <select id="justificativa"  name="justificativa" class="form-control" ng-hide="model.inputPanel.showInputForInserirAction()" 
-                                                            ng-model="model.inputPanel.description" ng-options="description as description.text for description in model.inputPanel.descriptionList track by description.id">
+                                                            ng-model="model.inputPanel.description" ng-options="item as item.description for item in model.inputPanel.descriptionList track by item.id">
                                                         </select>
                                                         <select id="justificativa" name="justificativa" class="form-control" required ng-show="model.inputPanel.showInputForInserirAction()" 
-                                                            ng-model="model.inputPanel.description" ng-options="description as description.text for description in model.inputPanel.descriptionList track by description.id">
+                                                            ng-model="model.inputPanel.description" ng-options="item as item.description for item in model.inputPanel.descriptionList track by item.id">
                                                         </select>
                                                     </div>
                                                 </div>
@@ -132,14 +127,12 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr ng-repeat="result in model.results">
-                                                        <td>{{result.date}}</td>
-                                                        <td>{{result.startHour}}</td>
-                                                        <td>{{result.endHour}}</td>
-                                                        <td>{{result.totalHours}}</td>
+                                                        <td>{{result.formattedDate}}</td>
+                                                        <td>{{result.startTime}}</td>
+                                                        <td>{{result.endTime}}</td>
+                                                        <td>{{result.hours}}</td>
                                                         <td>{{result.description}}</td>
                                                         <td>
-                                                            <a ng-click="model.editResult($index)"><i class="glyphicon glyphicon-pencil"></i></a>
-                                                            &nbsp;
                                                             <a ng-click="model.removeResult($index)"><i class="glyphicon glyphicon-remove"></i></a>
                                                         </td>
                                                     </tr>

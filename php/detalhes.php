@@ -5,12 +5,7 @@
             $_POST = json_decode(file_get_contents('php://input'), true);
         handlePost($_POST);
     }else if($_SERVER['REQUEST_METHOD'] == 'GET'){
-        if(empty($_GET))
-            $_GET = json_decode(file_get_contents('php://input'), true);
         handleGet($_GET);
-    }else if($_SERVER['REQUEST_METHOD'] == 'PUT'){
-        $putData = json_decode(file_get_contents('php://input'), true);
-        handlePut($putData);
     }else if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
         print_r($_REQUEST);
         handleDelete($_REQUEST);
@@ -55,9 +50,36 @@
         $db = createDatabaseConnection();
 
         $db->query('SET CHARACTER SET utf8');
-        $query = $db->query("SELECT profiles.id, profiles.description 
-                            FROM profiles INNER JOIN users_profiles ON profiles.id = users_profiles.id_profile
-                            WHERE users_profiles.id_user = '" . $_SESSION['user']['id'] . "'");
+
+        $query_text = "SELECT entries.id, 
+                            entries.date,
+                            entries.start_time startTime, 
+                            entries.end_time endTime, 
+                            TIMESTAMPDIFF(HOUR,entries.start_time,entries.end_time) hours,
+                            entry_types.id entry_types_id,
+                            entry_types.description
+                            FROM entries INNER JOIN entry_types ON entries.id_entry_type = entry_types.id
+                            WHERE entries.id_user = '" . $_SESSION['user']['id'] . "'";
+
+        if(isset($getData['startDate']) && $getData['startDate']){
+            $query_text = $query_text . " AND entries.date >= '" . $getData['startDate'] . "'";
+        } else {
+            $query_text = $query_text . " AND MONTH(entries.date) >= " . date('n');
+        }
+
+        if(isset($getData['endDate']) && $getData['endDate']){
+            $query_text = $query_text . " AND entries.date <= '" . $getData['endDate'] . "'";
+        } else {
+            $query_text = $query_text . " AND MONTH(entries.date) <= " . date('n');
+        }
+
+        if(isset($getData['entryType']) && $getData['entryType']){
+            $query_text = $query_text . " AND entries.id_entry_type = " . $getData['entryType'];
+        }
+
+        $query_text = $query_text . " ORDER BY entries.date ";  
+
+        $query = $db->query($query_text);
 
         if(!$query){
             header("HTTP/1.1 500 Internal Server Error");
@@ -71,7 +93,15 @@
             $json[] = $data;
         }
 
-        echo(json_encode($json,JSON_UNESCAPED_UNICODE));
+        $model = [ 
+        'user' => [
+                'name' => $_SESSION['user']['name'],
+                'profile' => $_SESSION['user']['selectedProfile']['description']
+            ],
+            'results' => $json
+        ];
+
+        echo(json_encode($model,JSON_UNESCAPED_UNICODE));
         $db->close();
     }
 
